@@ -8,15 +8,24 @@ public class Pisarz extends Thread{
     boolean wBibliotece = false;
     int ellapsedTime = 0;
 
+    Library library;
+
+    public Pisarz(Library lib){
+        this.library = lib;
+    }
+
     @Override
     public void run() {
         numer++;
         wlasnyNumer = numer;
+        library.requestWrite(this);
         while (true) {
 
             try {
                 if(ellapsedTime>2){
                     wychodze();
+                    library.finishWrite();
+                    library.numer_tury = 0;
                     break;
                 }
                 if(wBibliotece){
@@ -24,6 +33,7 @@ public class Pisarz extends Thread{
                     ellapsedTime++;
                 }
                 else{
+
                     czekam();
                 }
                 Thread.sleep(1000);
@@ -37,7 +47,7 @@ public class Pisarz extends Thread{
         wBibliotece = !wBibliotece;
     }
     public void czytam(){
-        System.out.println("Pisarz nr "+wlasnyNumer+":Czytam");
+        System.out.println("Pisarz nr "+wlasnyNumer+":Piszę");
     }
     public void czekam(){
         System.out.println("Pisarz nr "+wlasnyNumer+":Chce wejsc do czytelni");

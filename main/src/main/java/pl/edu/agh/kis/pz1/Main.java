@@ -10,16 +10,14 @@ public class Main {
         Library lib = new Library();
 
         for(int i = 0;i<8;i++){
-            Czytelnik temp = new Czytelnik();
+            Czytelnik temp = new Czytelnik(lib);
             temp.start();
-            lib.addToQueue(temp);
         }
         for(int i=0;i<3;i++){
-            Pisarz temp = new Pisarz();
+            Pisarz temp = new Pisarz(lib);
             temp.start();
-            lib.addToQueue(temp);
         }
-
+        lib.start();
 
     }
 }

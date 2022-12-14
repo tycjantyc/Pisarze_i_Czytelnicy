@@ -4,18 +4,25 @@ public class Czytelnik extends Thread {
     static int numer = 0;
     public static final  String typ = "czytelnik";
     public int wlasnyNumer = -1;
-    boolean wCzytelni = false;
+    public boolean wCzytelni = false;
     int ellapsedTime = 0;
+    Library library;
+
+    public Czytelnik(Library lib){
+        this.library = lib;
+    }
 
     @Override
     public void run() {
         numer++;
         wlasnyNumer = numer;
+        library.requestRead(this);
         while (true) {
 
             try {
                 if(ellapsedTime>2){
                     wychodze();
+                    library.finishRead();
                     break;
                 }
                 if(wCzytelni){
@@ -23,6 +30,7 @@ public class Czytelnik extends Thread {
                     ellapsedTime++;
                 }
                 else{
+
                     czekam();
                 }
                 Thread.sleep(1000);
